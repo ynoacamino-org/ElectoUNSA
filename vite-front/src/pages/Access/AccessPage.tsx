@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import BackButton from '../../components/layout/BackButton';
 import allowedCredentials from '../../data/allowedEmails.json';
+import logoElectoUnsa from '../../assets/logoElectoUnsa.png';
 
 export default function AccessPage() {
   const navigate = useNavigate();
@@ -55,7 +56,11 @@ export default function AccessPage() {
 
       <div className="bg-white p-8 rounded-lg shadow-md w-96">
         <div className="mb-6 flex justify-center">
-          <div className="w-16 h-16 bg-unsa-granate rounded-full"></div>
+          <img 
+            src={logoElectoUnsa} 
+            alt="Logo ElectoUNSA" 
+            className="w-16 h-16 object-contain rounded-full border-4 border-[#651528]" 
+          />
         </div>
 
         <h1 className="text-2xl font-bold mb-2 text-center text-unsa-granate">

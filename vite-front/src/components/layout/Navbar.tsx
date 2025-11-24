@@ -1,5 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
+import logoElectoUnsa from '../../assets/logoElectoUnsa.png';
 
 function Navbar() {
   const location = useLocation();
@@ -41,7 +42,12 @@ function Navbar() {
 
         {/* IZQUIERDA */}
         <div className="flex items-center gap-4 ml-8">
-          <div className="w-10 h-10 bg-white rounded-full"></div>
+          <img 
+            src={logoElectoUnsa} 
+            alt="Logo ElectoUNSA" 
+            className="w-10 h-10 object-contain"
+          />
+
           <span className="text-xl font-bold tracking-wide">ElectoUNSA</span>
         </div>
 
