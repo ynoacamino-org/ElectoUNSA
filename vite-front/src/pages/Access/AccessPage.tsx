@@ -1,19 +1,51 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import BackButton from '../../components/layout/BackButton';
-import styles from "./AccessPage.module.css";
-
-const GoogleIcon: React.FC = () => (
-    <svg width="18" height="18" viewBox="0 0 533.5 544.3" xmlns="http://www.w3.org/2000/svg" aria-hidden>
-        <path fill="#4285F4" d="M533.5 278.4c0-18.5-1.6-36.3-4.6-53.6H272v101.2h147.1c-6.4 35-25.8 64.7-55 84.6v70.1h88.8c52-48 82.6-118.4 82.6-202.3z"/>
-        <path fill="#34A853" d="M272 544.3c74.4 0 136.8-24.6 182.4-66.7l-88.8-70.1c-24.7 16.6-56.4 26.4-93.6 26.4-71.9 0-132.9-48.6-154.8-114.1H28.8v71.7C73.7 489 165.4 544.3 272 544.3z"/>
-        <path fill="#FBBC05" d="M117.2 328.8c-10.8-32.5-10.8-67.6 0-100.1V157H28.8C10.1 197.7 0 236.9 0 278.7s10.1 81 28.8 121.7l88.4-71.6z"/>
-        <path fill="#EA4335" d="M272 109.6c39.9 0 75.8 13.7 104 40.5l78-78C405.1 24.2 342.7 0 272 0 165.4 0 73.7 55.3 28.8 137.7l88.4 71.7C139.1 158.2 200.1 109.6 272 109.6z"/>
-    </svg>
-);
+import allowedCredentials from '../../data/allowedEmails.json';
 
 export default function AccessPage() {
   const navigate = useNavigate();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    setError('');
+    setLoading(true);
+
+    if (!email.trim()) {
+      setError('Por favor ingresa tu email');
+      setLoading(false);
+      return;
+    }
+
+    if (!password.trim()) {
+      setError('Por favor ingresa tu contraseña');
+      setLoading(false);
+      return;
+    }
+
+    // Validar credenciales
+    const credentials = (allowedCredentials as any).allowedCredentials;
+    const isCredentialValid = credentials.some(
+      (cred: any) => cred.email === email && cred.password === password
+    );
+
+    if (!isCredentialValid) {
+      setError('Email o contraseña incorrectos');
+      setLoading(false);
+      return;
+    }
+
+    // Guardar en localStorage
+    localStorage.setItem('isLoggedIn', 'true');
+    localStorage.setItem('userEmail', email);
+
+    setLoading(false);
+    navigate('/');
+  };
 
   return (
     <div className="access-page flex flex-col items-center justify-center min-h-screen bg-gray-100">
@@ -21,37 +53,64 @@ export default function AccessPage() {
         <BackButton />
       </div>
 
-      <div className={styles.card}>
-        <div className={styles.logo} aria-hidden></div>
+      <div className="bg-white p-8 rounded-lg shadow-md w-96">
+        <div className="mb-6 flex justify-center">
+          <div className="w-16 h-16 bg-unsa-granate rounded-full"></div>
+        </div>
 
-        <h1 className={styles.title}>
-          Bienvenido a
-          <br />
-          ElectoUNSA
+        <h1 className="text-2xl font-bold mb-2 text-center text-unsa-granate">
+          Bienvenido a ElectoUNSA
         </h1>
 
-        <p className={styles.description}>
+        <p className="text-gray-600 text-sm text-center mb-6">
           Acceso exclusivo para cuentas autorizadas.
           <br />
-          Solo los administradores y postulantes
-          <br />
-          registrados pueden ingresar para gestionar la 
-          <br />
-          información electoral
+          Solo los administradores y postulantes registrados pueden ingresar.
         </p>
 
-        <button
-          className={styles.googleBtn}
-          onClick={(e) => {
-            e.preventDefault();
-            // placeholder: aquí irá la acción real (OAuth) para conectar al backend
-          }}
-        >
-          <span className={styles.icon}><GoogleIcon /></span>
-          <span className={styles.btnText}>Iniciar sesión con Google</span>
-        </button>
+        <form onSubmit={handleLogin} className="flex flex-col gap-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Email
+            </label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="ejemplo@unsa.edu.pe"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-unsa-granate focus:ring-1 focus:ring-unsa-granate"
+            />
+          </div>
 
-        <a className={styles.help} href="#" onClick={(e) => e.preventDefault()}>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Contraseña
+            </label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="••••••••"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-unsa-granate focus:ring-1 focus:ring-unsa-granate"
+            />
+          </div>
+
+          {error && (
+            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg text-sm">
+              {error}
+            </div>
+          )}
+
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full bg-unsa-granate text-white font-semibold py-2 rounded-lg hover:bg-[#4a0f1e] transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {loading ? 'Ingresando...' : 'Iniciar Sesión'}
+          </button>
+        </form>
+
+        <a href="#" onClick={(e) => e.preventDefault()} className="text-center block mt-4 text-sm text-gray-600 hover:text-unsa-granate transition">
           ¿Necesitas ayuda? Contacta a soporte
         </a>
       </div>

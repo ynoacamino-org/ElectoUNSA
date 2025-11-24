@@ -1,0 +1,14 @@
+{
+  "allowedCredentials": [
+    {
+      "email": "jajra@unsa.edu.pe",
+      "password": "unsa2025"
+    },
+    {
+      "email": "renovacion@unsa.edu.pe",
+      "password": "electounsa"
+    }
+  ]
+}
+
+
