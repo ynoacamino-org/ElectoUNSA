@@ -44,7 +44,16 @@ export const MyListPage = () => {
 
   const handleFile = (e: ChangeEvent<HTMLInputElement>, type: 'logo' | 'pdf') => {
     if (e.target.files?.[0]) {
-      type === 'logo' ? setLogoFile(e.target.files[0]) : setPdfFile(e.target.files[0]);
+      const file = e.target.files[0];
+      
+      // VALIDACIÓN DE TAMAÑO (Máximo 300KB)
+      // 300 * 1024 = 307200 bytes
+      if (file.size > 307200) {
+        alert(`⚠️ El archivo "${file.name}" es muy pesado para esta demo.\n\nLímite: 300KB.\nTu archivo: ${(file.size/1024).toFixed(0)}KB.`);
+        return; // No lo guardamos
+      }
+
+      type === 'logo' ? setLogoFile(file) : setPdfFile(file);
     }
   };
 
@@ -80,19 +89,13 @@ export const MyListPage = () => {
   const handleSubmit = async () => {
     if (!info.nombreLista) return alert('Ponle nombre a la lista');
 
-    // 1. CONVERTIR ARCHIVOS A TEXTO (BASE64)
+    // Conversión a Base64
     let logoBase64 = undefined;
     let pdfBase64 = undefined;
 
-    if (logoFile) {
-      logoBase64 = await fileToBase64(logoFile);
-    }
-    
-    if (pdfFile) {
-      pdfBase64 = await fileToBase64(pdfFile);
-    }
+    if (logoFile) logoBase64 = await fileToBase64(logoFile);
+    if (pdfFile) pdfBase64 = await fileToBase64(pdfFile);
 
-    // 2. CREAR EL OBJETO
     const newList: ElectoralList = {
       id: Date.now().toString(),
       nombre: info.nombreLista,
@@ -100,21 +103,22 @@ export const MyListPage = () => {
       anio: '2025',
       subtitulo: info.slogan || 'Sin slogan',
       descripcion: info.propuestas || 'Sin descripción',
-      
-      // Guardamos el PDF convertido dentro del objeto
       documentos: pdfFile && pdfBase64 ? [{ 
         titulo: "Plan de Gobierno", 
         desc: pdfFile.name,
-        archivo: pdfBase64
+        archivo: pdfBase64 
       }] : [],
-      
       integrantes: members.map(m => ({ nombre: m.nombre, cargo: m.cargo, anio: '2025' })),
       logo: logoBase64
     };
 
-    saveList(newList);
-    alert('¡Lista creada y documentos guardados!');
-    navigate('/listas');
+    const exito = saveList(newList);
+
+    if (exito) {
+      alert('¡Lista creada exitosamente!');
+      navigate('/listas');
+    }
+
   };
 
   return (

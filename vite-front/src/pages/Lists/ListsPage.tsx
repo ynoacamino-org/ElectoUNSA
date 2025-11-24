@@ -1,15 +1,15 @@
 import { useState, useEffect } from 'react';
 import { FilterBar } from '../../components/lists/FilterBar';
 import { ListCard } from '../../components/lists/ListCard';
-import { getAllLists } from '../../data/dataManager';
+import { getAllLists } from '../../data/dataManager'; // <--- IMPORTANTE: Usamos el gestor
 import type { ElectoralList } from '../../types';
 
-// Importar logos estáticos (Del cambio entrante)
+// 1. IMPORTAR LOGOS ESTÁTICOS
 import LogoRenovacion from '../../assets/renovacion_universitaria.png';
 import LogoIntegra from '../../assets/unsa_integra.png';
 import LogoFuerza from '../../assets/fuerza_estudiantil.png';
 
-// Mapa de logos
+// 2. MAPA DE LOGOS
 const logoMap: { [key: string]: string } = {
   "renovacion_universitaria.png": LogoRenovacion,
   "unsa_integra.png": LogoIntegra,
@@ -21,23 +21,26 @@ export const ListsPage = () => {
   const [selectedType, setSelectedType] = useState('');
   const [selectedYear, setSelectedYear] = useState('');
   
+  // Estados de datos
   const [allLists, setAllLists] = useState<ElectoralList[]>([]);
   const [filteredLists, setFilteredLists] = useState<ElectoralList[]>([]);
 
-  // Cargar datos al iniciar y mezclar con los logos importados
+  // 3. CARGAR DATOS Y PROCESAR IMÁGENES
   useEffect(() => {
+    // A. Obtenemos listas del JSON + LocalStorage
     const rawData = getAllLists();
     
-    // Enriquecer datos: Si tienen un string de logo que coincide con el mapa, usar la imagen importada
-    const enrichedData = rawData.map(list => {
-      if (list.logo && logoMap[list.logo]) {
-        return { ...list, logo: logoMap[list.logo] };
-      }
-      return list;
+    // B. Procesamos los logos
+    const processedData = rawData.map(list => {
+      // Si la lista tiene un logo que existe en el mapa (es del JSON), úsalo.
+      // Si no está en el mapa (es Base64 de una lista nueva), usa el valor original.
+      const realLogo = (list.logo && logoMap[list.logo]) ? logoMap[list.logo] : list.logo;
+      
+      return { ...list, logo: realLogo };
     });
 
-    setAllLists(enrichedData);
-    setFilteredLists(enrichedData);
+    setAllLists(processedData);
+    setFilteredLists(processedData);
   }, []);
 
   const handleApplyFilters = () => {
@@ -67,7 +70,6 @@ export const ListsPage = () => {
   return (
     <div className="min-h-screen bg-gray-50 py-10 px-4 sm:px-6 lg:px-8 font-sans">
       <div className="max-w-7xl mx-auto">
-
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-unsa-granate">Listas Electorales Autorizadas</h1>
           <p className="text-gray-600 mt-2 text-lg">
@@ -95,13 +97,11 @@ export const ListsPage = () => {
         {filteredLists.length === 0 && (
           <div className="text-center py-20 bg-white rounded-xl border border-gray-200 mt-6">
             <h3 className="text-xl font-bold text-gray-700">No se encontraron resultados</h3>
-            <p className="text-gray-500 mt-2">Intenta ajustar los filtros o limpiar la búsqueda.</p>
             <button onClick={handleClear} className="mt-4 text-unsa-granate font-bold hover:underline">
               Limpiar filtros
             </button>
           </div>
         )}
-
       </div>
     </div>
   );

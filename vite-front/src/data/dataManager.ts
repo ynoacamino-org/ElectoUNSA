@@ -1,46 +1,50 @@
-// src/data/dataManager.ts
 import initialData from './lists.json';
 import type { ElectoralList } from '../types';
 
 const STORAGE_KEY = 'electo_listas_db';
 
-// OBTENER TODAS LAS LISTAS
 export const getAllLists = (): ElectoralList[] => {
-  // 1. Revisar si hay cambios guardados en el navegador
-  const localData = localStorage.getItem(STORAGE_KEY);
-  
-  if (localData) {
-    return JSON.parse(localData);
+  try {
+    const local = localStorage.getItem(STORAGE_KEY);
+    let localListas: ElectoralList[] = [];
+    if (local) {
+      localListas = JSON.parse(local);
+    }
+    return [...localListas, ...(initialData as unknown as ElectoralList[])];
+  } catch (error) {
+    console.error("Error leyendo localStorage", error);
+    return initialData as unknown as ElectoralList[];
   }
-
-  // 2. Si no hay nada en el navegador, devolver el JSON original
-  // (Aseguramos que el JSON se trate como ElectoralList[])
-  return initialData as unknown as ElectoralList[];
 };
 
-// OBTENER UNA LISTA POR ID
 export const getListById = (id: string): ElectoralList | undefined => {
   const lists = getAllLists();
-  return lists.find(list => list.id === id);
+  return lists.find(l => l.id === id);
 };
 
-// GUARDAR UNA NUEVA LISTA (O EDITAR)
 export const saveList = (newList: ElectoralList) => {
-  const currentLists = getAllLists();
-  
-  // Verificamos si ya existe para actualizar o agregar
-  const index = currentLists.findIndex(l => l.id === newList.id);
-  
-  let updatedLists;
-  if (index >= 0) {
-    // Editar existente
-    updatedLists = [...currentLists];
-    updatedLists[index] = newList;
-  } else {
-    // Agregar nueva
-    updatedLists = [...currentLists, newList];
-  }
+  try {
+    // 1. Obtener datos actuales
+    const local = localStorage.getItem(STORAGE_KEY);
+    let localListas: ElectoralList[] = [];
+    if (local) {
+      localListas = JSON.parse(local);
+    }
+    
+    // 2. Agregar nuevo
+    const updatedLists = [newList, ...localListas];
+    
+    // 3. Intentar guardar (Aquí es donde falla si es muy grande)
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedLists));
+    return true; // Éxito
 
-  // Guardar en el navegador
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedLists));
+  } catch (error: any) {
+    // Si el error es por espacio lleno
+    if (error.name === 'QuotaExceededError') {
+      alert("⚠️ ¡Memoria llena!\n\nEl navegador solo permite guardar 5MB de datos. Tu PDF o Logo es muy pesado.\n\nIntenta con archivos más pequeños (menos de 200KB) para esta demo.");
+    } else {
+      console.error("Error guardando lista:", error);
+    }
+    return false; // Falló
+  }
 };

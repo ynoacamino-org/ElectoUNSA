@@ -1,13 +1,13 @@
 import { useParams, Link } from 'react-router-dom';
 import { FileText, ArrowLeft } from 'lucide-react';
-import { getListById } from '../../data/dataManager';
+import { getListById } from '../../data/dataManager'; // <--- IMPORTANTE
 
-// Importar documentos estáticos
+// Documentos
 import HojaDeVida from '../../documents/HojaDeVida.pdf';
 import PlanDeTrabajo from '../../documents/PlanDeTrabajo.pdf';
 import PropuestasDeListas from '../../documents/PropuestasDeListas.pdf';
 
-// Importar fotos de integrantes (Del cambio entrante)
+// Fotos (Del pull request)
 import FotoJuan from '../../assets/juan_carlos_quinto.jpg';
 import FotoMaria from '../../assets/maria fernandez.jpeg';
 import FotoLuis from '../../assets/Luis_peralta.jpeg';
@@ -16,7 +16,6 @@ import FotoCarlos from '../../assets/carlos_mendoza.jpeg';
 import FotoLucia from '../../assets/lucia_ramirez.jpeg';
 import DefaultPhoto from '../../assets/default.png';
 
-// Mapear los archivos con las rutas de tu JSON
 const archivosMap: Record<string, string> = {
   'documents/HojaDeVida.pdf': HojaDeVida,
   'documents/PlanDeTrabajo.pdf': PlanDeTrabajo,
@@ -34,10 +33,11 @@ const fotosMap: Record<string, string> = {
 
 export const ListDetailPage = () => {
   const { id } = useParams();
-  // Usamos el gestor para soportar listas nuevas y viejas
-  const data = id ? getListById(id) : undefined;
+  
+  // 1. BUSCAR LA LISTA (Soporta JSON y LocalStorage)
+  const rawData = id ? getListById(id) : undefined;
 
-  if (!data) {
+  if (!rawData) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center gap-4">
         <h2 className="text-2xl font-bold text-unsa-granate">Lista no encontrada</h2>
@@ -45,6 +45,14 @@ export const ListDetailPage = () => {
       </div>
     );
   }
+
+  // 2. Procesar el Logo (Igual que en ListsPage, por si acaso)
+  // Nota: Esto asume que tienes logoMap importado o usas rawData.logo si es Base64
+  // Como aquí no importamos los logos, asumimos que si es del JSON el <img> fallaría a menos que sea URL
+  // Para simplificar en Detalle: Mostramos el logo tal cual si es Base64, o nada si es string de archivo sin mapa.
+  // Si quieres que se vean los logos del JSON aquí, tendrías que importar el logoMap igual que en ListsPage.
+  
+  const data = rawData; 
 
   return (
     <div className="min-h-screen bg-white py-10 px-4 sm:px-6 lg:px-8 font-sans">
@@ -55,10 +63,11 @@ export const ListDetailPage = () => {
 
         {/* ENCABEZADO */}
         <div className="mb-10 flex flex-col md:flex-row gap-6 items-start">
-            {/* Si tiene logo (Base64 o URL), lo mostramos */}
-            {data.logo && (
-                <img src={data.logo} alt="Logo lista" className="w-32 h-32 object-contain rounded-full border-4 border-gray-100 shadow-md" />
-            )}
+            {/* Renderizado de logo seguro */}
+            {data.logo && (data.logo.startsWith('data:') || data.logo.startsWith('http')) ? (
+                 <img src={data.logo} alt="Logo" className="w-32 h-32 object-contain rounded-full border-4 border-gray-100 shadow-md" />
+            ) : null}
+            
             <div>
                 <h1 className="text-4xl font-bold text-unsa-granate mb-2">{data.nombre}</h1>
                 <h2 className="text-xl text-gray-500 font-medium mb-6">{data.subtitulo}</h2>
@@ -68,23 +77,16 @@ export const ListDetailPage = () => {
             </div>
         </div>
 
-        {/* DOCUMENTOS OFICIALES */}
+        {/* DOCUMENTOS */}
         <section className="mb-12">
           <h3 className="text-2xl font-bold text-unsa-granate mb-6">Documentos Oficiales</h3>
           <div className="flex flex-col gap-4">
             {data.documentos.map((doc, index) => {
-              // LÓGICA MAESTRA PARA OBTENER EL PDF
               let fileUrl = '#';
               const archivoInfo = (doc as any).archivo;
-
               if (archivoInfo) {
-                if (archivoInfo.startsWith('data:')) {
-                    // CASO 1: Es un PDF nuevo (Base64) guardado en memoria
-                    fileUrl = archivoInfo;
-                } else {
-                    // CASO 2: Es un PDF estático del JSON
-                    fileUrl = archivosMap[archivoInfo] || '#';
-                }
+                if (archivoInfo.startsWith('data:')) fileUrl = archivoInfo;
+                else fileUrl = archivosMap[archivoInfo] || '#';
               }
 
               return (
@@ -93,7 +95,7 @@ export const ListDetailPage = () => {
                   href={fileUrl}
                   download={doc.titulo}
                   className={`flex items-center gap-4 p-4 border rounded-lg shadow-sm transition-shadow cursor-pointer 
-                    ${fileUrl !== '#' ? 'bg-white hover:shadow-md border-gray-300' : 'bg-gray-50 border-gray-200 cursor-not-allowed'}`}
+                    ${fileUrl !== '#' ? 'bg-white hover:shadow-md border-gray-300' : 'bg-gray-50 border-gray-200'}`}
                 >
                   <FileText className="w-8 h-8 text-gray-600" strokeWidth={1.5} />
                   <div>
@@ -103,8 +105,7 @@ export const ListDetailPage = () => {
                 </a>
               );
             })}
-            
-            {data.documentos.length === 0 && <p className="text-gray-400 italic">No hay documentos cargados.</p>}
+             {data.documentos.length === 0 && <p className="text-gray-400">No hay documentos.</p>}
           </div>
         </section>
 
@@ -113,28 +114,29 @@ export const ListDetailPage = () => {
           <h3 className="text-2xl font-bold text-unsa-granate mb-6">Integrantes</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {data.integrantes.map((member, index) => {
-               // Lógica para foto: Buscar en mapa, si no existe usar Default
-               const fotoUrl = (member as any).foto ? fotosMap[(member as any).foto] : DefaultPhoto;
-               
+               // 3. MAPEO DE FOTOS
+               // Si el miembro tiene propiedad 'foto', la buscamos en el mapa. Si no, Default.
+               const fotoKey = (member as any).foto;
+               const fotoUrl = fotoKey ? (fotosMap[fotoKey] || DefaultPhoto) : DefaultPhoto;
+
                return (
-                <div key={index} className="flex flex-col border-2 border-unsa-granate/20 rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all group">
-                  <div className="h-48 w-full overflow-hidden bg-gray-100">
-                    <img
-                      src={fotoUrl || DefaultPhoto}
-                      alt={member.nombre}
-                      className="w-full h-full object-cover object-top"
-                    />
+                  <div key={index} className="flex flex-col border-2 border-unsa-granate/20 rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all">
+                    <div className="h-48 w-full overflow-hidden bg-gray-100">
+                      <img
+                        src={fotoUrl}
+                        alt={member.nombre}
+                        className="w-full h-full object-cover object-top"
+                      />
+                    </div>
+                    <div className="p-6 flex flex-col flex-grow bg-white">
+                      <h4 className="text-lg font-bold text-unsa-granate mb-2 leading-tight">{member.nombre}</h4>
+                      <p className="text-gray-700 text-sm mb-1 font-medium">{member.cargo}</p>
+                      <p className="text-gray-600 text-sm mb-6">Año: {member.anio}</p>
+                      <button className="mt-auto w-full bg-unsa-granate text-white font-bold py-2.5 rounded-lg transition-colors text-sm">
+                        Ver Hoja de Vida
+                      </button>
+                    </div>
                   </div>
-                  <div className="p-6 flex flex-col flex-grow bg-white">
-                    <h4 className="text-lg font-bold text-unsa-granate mb-2 leading-tight">{member.nombre}</h4>
-                    <p className="text-gray-700 text-sm mb-1 font-medium">{member.cargo}</p>
-                    <p className="text-gray-600 text-sm mb-6">Año: {member.anio}</p>
-                    
-                    <button className="mt-auto w-full bg-unsa-granate text-white font-bold py-2.5 rounded-lg group-hover:bg-[#4a0f1e] transition-colors text-sm">
-                      Ver Hoja de Vida
-                    </button>
-                  </div>
-                </div>
                );
             })}
           </div>
