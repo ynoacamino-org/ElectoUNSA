@@ -1,8 +1,8 @@
 import { Routes, Route } from "react-router-dom";
 
 import HomePage from "../pages/Home/HomePage";
-import ListsPage from "../pages/Lists/ListsPage";
-import ListDetailPage from "../pages/Lists/ListDetailPage";
+import { ListsPage } from "../pages/Lists/ListsPage";
+import { ListDetailPage } from "../pages/Lists/ListDetailPage";
 import ElectoralProcessPage from "../pages/ElectoralProcess/ElectoralProcessPage";
 import AccessPage from "../pages/Access/AccessPage";
 import MyListPage from "../pages/MyList/MyListPage";

@@ -1,1 +1,18 @@
 @import "tailwindcss";
+
+@theme {
+  /* Configuración de Fuentes */
+  --font-sans: 'Roboto', system-ui, sans-serif;
+
+  /* Configuración de Colores UNSA */
+  --color-unsa-azul: #131D41;
+  --color-unsa-gris: #6E6E6D;
+  --color-unsa-granate: #641529;
+  --color-unsa-blanco: #FFFFFF;
+}
+
+/* Estilos base globales */
+body {
+  background-color: var(--color-gray-50); /* Usa variables nativas de v4 */
+  color: var(--color-unsa-azul);
+}
