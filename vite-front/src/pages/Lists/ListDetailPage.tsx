@@ -7,14 +7,34 @@ import HojaDeVida from '../../documents/HojaDeVida.pdf';
 import PlanDeTrabajo from '../../documents/PlanDeTrabajo.pdf';
 import PropuestasDeListas from '../../documents/PropuestasDeListas.pdf';
 
+// Importar fotos de integrantes (Del cambio entrante)
+import FotoJuan from '../../assets/juan_carlos_quinto.jpg';
+import FotoMaria from '../../assets/maria fernandez.jpeg';
+import FotoLuis from '../../assets/Luis_peralta.jpeg';
+import FotoAna from '../../assets/ana_soto.png';
+import FotoCarlos from '../../assets/carlos_mendoza.jpeg';
+import FotoLucia from '../../assets/lucia_ramirez.jpeg';
+import DefaultPhoto from '../../assets/default.png';
+
+// Mapear los archivos con las rutas de tu JSON
 const archivosMap: Record<string, string> = {
   'documents/HojaDeVida.pdf': HojaDeVida,
   'documents/PlanDeTrabajo.pdf': PlanDeTrabajo,
   'documents/PropuestasDeListas.pdf': PropuestasDeListas
 };
 
+const fotosMap: Record<string, string> = {
+  "juan_carlos_quinto.jpg": FotoJuan,
+  "maria fernandez.jpeg": FotoMaria,
+  "Luis_peralta.jpeg": FotoLuis,
+  "ana_soto.png": FotoAna,
+  "carlos_mendoza.jpeg": FotoCarlos,
+  "lucia_ramirez.jpeg": FotoLucia
+};
+
 export const ListDetailPage = () => {
   const { id } = useParams();
+  // Usamos el gestor para soportar listas nuevas y viejas
   const data = id ? getListById(id) : undefined;
 
   if (!data) {
@@ -35,7 +55,7 @@ export const ListDetailPage = () => {
 
         {/* ENCABEZADO */}
         <div className="mb-10 flex flex-col md:flex-row gap-6 items-start">
-            {/* Si tiene logo, lo mostramos */}
+            {/* Si tiene logo (Base64 o URL), lo mostramos */}
             {data.logo && (
                 <img src={data.logo} alt="Logo lista" className="w-32 h-32 object-contain rounded-full border-4 border-gray-100 shadow-md" />
             )}
@@ -71,7 +91,7 @@ export const ListDetailPage = () => {
                 <a
                   key={index}
                   href={fileUrl}
-                  download={doc.titulo} // Esto fuerza la descarga con el nombre correcto
+                  download={doc.titulo}
                   className={`flex items-center gap-4 p-4 border rounded-lg shadow-sm transition-shadow cursor-pointer 
                     ${fileUrl !== '#' ? 'bg-white hover:shadow-md border-gray-300' : 'bg-gray-50 border-gray-200 cursor-not-allowed'}`}
                 >
@@ -92,22 +112,31 @@ export const ListDetailPage = () => {
         <section>
           <h3 className="text-2xl font-bold text-unsa-granate mb-6">Integrantes</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {data.integrantes.map((member, index) => (
-              <div key={index} className="flex flex-col border-2 border-unsa-granate/20 rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all group">
-                <div className="h-48 bg-rose-200 w-full flex items-center justify-center">
-                    <span className="text-unsa-granate/40 font-bold text-4xl">FOTO</span>
-                </div> 
-                <div className="p-6 flex flex-col grow bg-white">
-                  <h4 className="text-lg font-bold text-unsa-granate mb-2 leading-tight">{member.nombre}</h4>
-                  <p className="text-gray-700 text-sm mb-1 font-medium">{member.cargo}</p>
-                  <p className="text-gray-600 text-sm mb-6">Año: {member.anio}</p>
-                  
-                  <button className="mt-auto w-full bg-unsa-granate text-white font-bold py-2.5 rounded-lg group-hover:bg-[#4a0f1e] transition-colors text-sm">
-                    Ver Hoja de Vida
-                  </button>
+            {data.integrantes.map((member, index) => {
+               // Lógica para foto: Buscar en mapa, si no existe usar Default
+               const fotoUrl = (member as any).foto ? fotosMap[(member as any).foto] : DefaultPhoto;
+               
+               return (
+                <div key={index} className="flex flex-col border-2 border-unsa-granate/20 rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all group">
+                  <div className="h-48 w-full overflow-hidden bg-gray-100">
+                    <img
+                      src={fotoUrl || DefaultPhoto}
+                      alt={member.nombre}
+                      className="w-full h-full object-cover object-top"
+                    />
+                  </div>
+                  <div className="p-6 flex flex-col flex-grow bg-white">
+                    <h4 className="text-lg font-bold text-unsa-granate mb-2 leading-tight">{member.nombre}</h4>
+                    <p className="text-gray-700 text-sm mb-1 font-medium">{member.cargo}</p>
+                    <p className="text-gray-600 text-sm mb-6">Año: {member.anio}</p>
+                    
+                    <button className="mt-auto w-full bg-unsa-granate text-white font-bold py-2.5 rounded-lg group-hover:bg-[#4a0f1e] transition-colors text-sm">
+                      Ver Hoja de Vida
+                    </button>
+                  </div>
                 </div>
-              </div>
-            ))}
+               );
+            })}
           </div>
         </section>
       </div>
