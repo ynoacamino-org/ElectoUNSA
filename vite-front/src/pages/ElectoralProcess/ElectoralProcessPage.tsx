@@ -3,9 +3,20 @@ import {
   GraduationCap,
   Users,
   ChevronDown,
-  ChevronUp
+  ChevronUp,
+  Megaphone,
+  FileText,
+  AlertCircle,
+  Ban,
+  CheckCircle2,
+  Mic2,
+  Vote,
+  Calculator,
+  Trophy,
+  AlertTriangle,
+  Check
 } from 'lucide-react';
-import { electoralProcessSteps } from '../../data/electoralProcess';
+import electoralProcessData from '../../data/electoralProcess.json';
 import ProcessSection from '../../components/electoral/ProcessSection';
 
 interface OrganoInfo {
@@ -13,6 +24,25 @@ interface OrganoInfo {
   title: string;
   content: string;
 }
+
+const iconMap: { [key: string]: React.ReactNode } = {
+  Megaphone: <Megaphone className="w-6 h-6" />,
+  FileText: <FileText className="w-6 h-6" />,
+  AlertCircle: <AlertCircle className="w-6 h-6" />,
+  Ban: <Ban className="w-6 h-6" />,
+  CheckCircle2: <CheckCircle2 className="w-6 h-6" />,
+  Mic2: <Mic2 className="w-6 h-6" />,
+  Vote: <Vote className="w-6 h-6" />,
+  Calculator: <Calculator className="w-6 h-6" />,
+  Trophy: <Trophy className="w-6 h-6" />,
+  AlertTriangle: <AlertTriangle className="w-6 h-6" />,
+  Check: <Check className="w-6 h-6" />
+};
+
+const electoralProcessSteps = electoralProcessData.map(step => ({
+  ...step,
+  icon: iconMap[step.icon] || <AlertCircle className="w-6 h-6" /> // Fallback icon
+}));
 
 const ElectoralProcessPage: React.FC = () => {
   const [openSection, setOpenSection] = useState<string | null>('asamblea');
