@@ -1,5 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import Banner from "../../assets/Banner.jpeg";
+import LogoListas from "../../assets/logo_listas.png";
+import LogoProceso from "../../assets/logo_procesoelectoral.png";
+import LogoVotar from "../../assets/logo_votar.png";
+import ImgRectorado from "../../assets/elecciones_rectorado_2024.png";
+import ImgNormativa from "../../assets/Normativa_electoral.webp";
+import ImgResultados from "../../assets/resultados_anteriores.png";
 
 function HomePage() {
   const navigate = useNavigate();
@@ -19,7 +25,7 @@ function HomePage() {
           </h1>
 
           <p className="text-lg opacity-90 text-center leading-relaxed">
-            Tu plataforma central para la transparencia y participación en los 
+            Tu plataforma central para la transparencia y participación en los
             procesos electorales de la UNSA.
           </p>
         </div>
@@ -30,12 +36,12 @@ function HomePage() {
         <div className="flex flex-wrap justify-center items-stretch gap-10 w-[90%]">
 
           {/* CARD 1 */}
-          <div 
+          <div
             className="bg-white rounded-xl shadow-lg p-10 flex-1 min-w-[300px] max-w-[400px] flex flex-col justify-center items-center text-center transition-all hover:shadow-[0_10px_20px_rgba(101,21,40,0.4)] min-h-[40vh] gap-3 cursor-pointer active:scale-95"
             onClick={() => navigate("/listas")}
           >
-            <div className="w-28 h-28 bg-[#651528] rounded-full flex items-center justify-center">
-              {/* Icono o imagen */}
+            <div className="w-28 h-28 flex items-center justify-center">
+              <img src={LogoListas} alt="Ver Listas" className="w-full h-full object-contain" />
             </div>
             <h3 className="text-2xl font-semibold text-[#651528]">Ver Listas</h3>
             <p className="text-gray-600 text-lg">
@@ -44,12 +50,12 @@ function HomePage() {
           </div>
 
           {/* CARD 2 */}
-          <div 
+          <div
             className="bg-white rounded-xl shadow-lg p-10 flex-1 min-w-[300px] max-w-[400px] flex flex-col justify-center items-center text-center transition-all hover:shadow-[0_10px_20px_rgba(101,21,40,0.4)] min-h-[40vh] gap-3 cursor-pointer active:scale-95"
             onClick={() => navigate("/proceso")}
           >
-            <div className="w-28 h-28 bg-[#651528] rounded-full flex items-center justify-center">
-              {/* Icono o imagen */}
+            <div className="w-28 h-28 flex items-center justify-center">
+              <img src={LogoProceso} alt="Proceso Electoral" className="w-full h-full object-contain" />
             </div>
             <h3 className="text-2xl font-semibold text-[#651528]">Proceso Electoral</h3>
             <p className="text-gray-600 text-lg">
@@ -76,7 +82,7 @@ function HomePage() {
 
       {/* SECCIÓN DE POSTULANTE */}
       <div className="w-[97%] flex flex-col md:flex-row items-center px-6 py-12 gap-6 bg-[#651528] m-5 rounded-2xl mx-auto">
-        
+
         {/* TEXTO - 80% */}
         <div className="md:w-4/5 flex flex-col justify-center items-start gap-6 ml-8">
           <h2 className="text-3xl font-bold text-white">
@@ -85,7 +91,7 @@ function HomePage() {
           <p className="text-lg text-white">
             Gestiona tu lista desde el portal de postulantes
           </p>
-          <button 
+          <button
             onClick={() => navigate("/acceso")}
             className="bg-[#1B2753] text-white font-semibold px-6 py-3 rounded-lg border border-white hover:bg-[#0f1b38] transition active:scale-95 cursor-pointer"
           >
@@ -95,79 +101,81 @@ function HomePage() {
 
         {/* CÍRCULO / IMAGEN - 20% */}
         <div className="md:w-1/5 flex justify-center items-center">
-          <div className="w-32 h-32 md:w-40 md:h-40 bg-white rounded-full"></div>
+          <div className="w-32 h-32 md:w-40 md:h-40 bg-white rounded-full flex items-center justify-center p-2">
+            <img src={LogoVotar} alt="Postulante" className="w-full h-full object-contain" />
+          </div>
         </div>
 
       </div>
 
-      
 
 
-    {/* --- SECCIÓN DESTACADAS --- */}
-<div className="w-full py-10 px-6">
-  <div className="max-w-6xl mx-auto">
-    <h2 className="text-3xl font-bold text-gray-800 mb-8">
-      Secciones Destacadas
-    </h2>
-    <div className="flex flex-wrap justify-center gap-8">
-      
-      {/* DESTACADA CARD 1 */}
-      <div 
-        className="bg-white border border-gray-200 rounded-lg shadow-md hover:shadow-[0_10px_20px_rgba(101,21,40,0.4)] transition-shadow w-full sm:w-70 md:w-90 cursor-pointer"
-        onClick={() => navigate("/listas")}
-      >
-        <div className="h-50 bg-[#a86576] rounded-t-lg">
-          {/* Bloque de color vino */}
-        </div>
-        <div className="p-7">
-          <h3 className="text-xl font-semibold text-gray-800 mb-2">
-            Elecciones Rectorado 2024
-          </h3>
-          <p className="text-sm text-gray-600">
-            Listas que se encuentran postulando
-          </p>
+
+      {/* --- SECCIÓN DESTACADAS --- */}
+      <div className="w-full py-10 px-6">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-3xl font-bold text-gray-800 mb-8">
+            Secciones Destacadas
+          </h2>
+          <div className="flex flex-wrap justify-center gap-8">
+
+            {/* DESTACADA CARD 1 */}
+            <div
+              className="bg-white border border-gray-200 rounded-lg shadow-md hover:shadow-[0_10px_20px_rgba(101,21,40,0.4)] transition-shadow w-full sm:w-70 md:w-90 cursor-pointer overflow-hidden"
+              onClick={() => navigate("/listas")}
+            >
+              <div className="h-50 bg-gray-100">
+                <img src={ImgRectorado} alt="Elecciones Rectorado" className="w-full h-full object-cover" />
+              </div>
+              <div className="p-7">
+                <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                  Elecciones Rectorado 2024
+                </h3>
+                <p className="text-sm text-gray-600">
+                  Listas que se encuentran postulando
+                </p>
+              </div>
+            </div>
+
+            {/* DESTACADA CARD 2 */}
+            <div
+              className="bg-white border border-gray-200 rounded-lg shadow-md hover:shadow-[0_10px_20px_rgba(101,21,40,0.4)] transition-shadow w-full sm:w-70 md:w-90 cursor-pointer overflow-hidden"
+              onClick={() => navigate("/proceso")}
+            >
+              <div className="h-50 bg-gray-100">
+                <img src={ImgNormativa} alt="Normativa Electoral" className="w-full h-full object-cover" />
+              </div>
+              <div className="p-7">
+                <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                  Normativa Electoral
+                </h3>
+                <p className="text-sm text-gray-600">
+                  Consulta los reglamentos vigentes
+                </p>
+              </div>
+            </div>
+
+            {/* DESTACADA CARD 3 */}
+            <div
+              className="bg-white border border-gray-200 rounded-lg shadow-md hover:shadow-[0_10px_20px_rgba(101,21,40,0.4)] transition-shadow w-full sm:w-70 md:w-90 cursor-pointer overflow-hidden"
+              onClick={() => navigate("/listas")}
+            >
+              <div className="h-50 bg-gray-100">
+                <img src={ImgResultados} alt="Resultados Anteriores" className="w-full h-full object-cover" />
+              </div>
+              <div className="p-7">
+                <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                  Resultados Anteriores
+                </h3>
+                <p className="text-sm text-gray-600">
+                  Historial de Procesos Electorales
+                </p>
+              </div>
+            </div>
+
+          </div>
         </div>
       </div>
-
-      {/* DESTACADA CARD 2 */}
-      <div 
-        className="bg-white border border-gray-200 rounded-lg shadow-md hover:shadow-[0_10px_20px_rgba(101,21,40,0.4)] transition-shadow w-full sm:w-70 md:w-90 cursor-pointer"
-        onClick={() => navigate("/proceso")}
-      >
-        <div className="h-50 bg-[#a86576] rounded-t-lg">
-          {/* Bloque de color vino */}
-        </div>
-        <div className="p-7">
-          <h3 className="text-xl font-semibold text-gray-800 mb-2">
-            Normativa Electoral
-          </h3>
-          <p className="text-sm text-gray-600">
-            Consulta los reglamentos vigentes
-          </p>
-        </div>
-      </div>
-
-      {/* DESTACADA CARD 3 */}
-      <div 
-        className="bg-white border border-gray-200 rounded-lg shadow-md hover:shadow-[0_10px_20px_rgba(101,21,40,0.4)] transition-shadow w-full sm:w-70 md:w-90 cursor-pointer"
-        onClick={() => navigate("/listas")}
-      >
-        <div className="h-50 bg-[#a86576] rounded-t-lg">
-          {/* Bloque de color vino */}
-        </div>
-        <div className="p-7">
-          <h3 className="text-xl font-semibold text-gray-800 mb-2">
-            Resultados Anteriores
-          </h3>
-          <p className="text-sm text-gray-600">
-            Historial de Procesos Electorales
-          </p>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</div>
 
 
 

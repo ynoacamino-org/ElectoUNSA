@@ -7,11 +7,29 @@ import HojaDeVida from '../../documents/HojaDeVida.pdf';
 import PlanDeTrabajo from '../../documents/PlanDeTrabajo.pdf';
 import PropuestasDeListas from '../../documents/PropuestasDeListas.pdf';
 
+// Importar fotos de integrantes
+import FotoJuan from '../../assets/juan_carlos_quinto.jpg';
+import FotoMaria from '../../assets/maria fernandez.jpeg';
+import FotoLuis from '../../assets/Luis_peralta.jpeg';
+import FotoAna from '../../assets/ana_soto.png';
+import FotoCarlos from '../../assets/carlos_mendoza.jpeg';
+import FotoLucia from '../../assets/lucia_ramirez.jpeg';
+import DefaultPhoto from '../../assets/default.png';
+
 // Mapear los archivos con las rutas de tu JSON
 const archivosMap: Record<string, string> = {
   'documents/HojaDeVida.pdf': HojaDeVida,
   'documents/PlanDeTrabajo.pdf': PlanDeTrabajo,
   'documents/PropuestasDeListas.pdf': PropuestasDeListas
+};
+
+const fotosMap: Record<string, string> = {
+  "juan_carlos_quinto.jpg": FotoJuan,
+  "maria fernandez.jpeg": FotoMaria,
+  "Luis_peralta.jpeg": FotoLuis,
+  "ana_soto.png": FotoAna,
+  "carlos_mendoza.jpeg": FotoCarlos,
+  "lucia_ramirez.jpeg": FotoLucia
 };
 
 export const ListDetailPage = () => {
@@ -67,7 +85,13 @@ export const ListDetailPage = () => {
                 download
                 className="flex flex-col border-2 border-unsa-granate/20 rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all"
               >
-                <div className="h-48 bg-rose-200 w-full"></div> {/* Placeholder Foto */}
+                <div className="h-48 w-full overflow-hidden bg-gray-100">
+                  <img
+                    src={fotosMap[member.foto] || DefaultPhoto}
+                    alt={member.nombre}
+                    className="w-full h-full object-cover object-top"
+                  />
+                </div>
                 <div className="p-6 flex flex-col flex-grow bg-white">
                   <h4 className="text-lg font-bold text-unsa-granate mb-2 leading-tight">{member.nombre}</h4>
                   <p className="text-gray-700 text-sm mb-1 font-medium">{member.cargo}</p>
