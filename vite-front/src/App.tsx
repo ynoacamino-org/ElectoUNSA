@@ -2,8 +2,7 @@ import { useLocation } from 'react-router-dom';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 import AppRouter from './routes/AppRouter';
-import './styles/variables.css';
-import './styles/global.css';
+import "./index.css";
 
 function App() {
   const location = useLocation();
