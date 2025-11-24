@@ -1,19 +1,17 @@
 import { useState } from 'react';
 import { FilterBar } from '../../components/lists/FilterBar';
 import { ListCard } from '../../components/lists/ListCard';
-import { LISTAS_DATA } from '../../data/lists';
-import type { ListaDetallada } from '../../data/lists';
+import listsData from '../../data/lists.json';
 
 export const ListsPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedType, setSelectedType] = useState('');
   const [selectedYear, setSelectedYear] = useState('');
 
-  const [filteredLists, setFilteredLists] = useState<ListaDetallada[]>(LISTAS_DATA);
+  const [filteredLists, setFilteredLists] = useState(listsData);
 
-  // Lógica para APLICAR filtros
   const handleApplyFilters = () => {
-    let result = LISTAS_DATA;
+    let result = listsData;
 
     if (searchTerm.trim() !== '') {
       result = result.filter(lista => 
@@ -36,7 +34,7 @@ export const ListsPage = () => {
     setSearchTerm('');
     setSelectedType('');
     setSelectedYear('');
-    setFilteredLists(LISTAS_DATA);
+    setFilteredLists(listsData);
   };
 
   return (
@@ -62,7 +60,7 @@ export const ListsPage = () => {
         />
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {filteredLists.map((lista) => (
+          {filteredLists.map((lista: any) => (
             <ListCard 
               key={lista.id} 
               lista={lista} 

@@ -1,37 +1,32 @@
-import { Link } from 'react-router-dom';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import defaultImage from '../../assets/default.png';
 
-interface ListCardProps {
-  lista: any;
-}
+export const ListCard = ({ lista }: { lista: any }) => {
+  const navigate = useNavigate();
 
-export const ListCard = ({ lista }: ListCardProps) => {
+  // Si no hay logo, usar default
+  const logoSrc = lista.logo ? lista.logo : defaultImage;
+
+  const handleViewDetails = () => {
+    navigate(`/listas/${lista.id}`);
+  };
+
   return (
-    <div className="bg-white rounded-xl shadow-md overflow-hidden border border-gray-200 hover:shadow-xl transition-shadow duration-300 flex flex-col">
-      <div className="h-32 bg-unsa-granate/10 flex items-center justify-center relative">
-        <div className="h-16 w-16 bg-unsa-granate rounded-full opacity-80 flex items-center justify-center text-white font-bold text-xs">
-          LOGO
-        </div>
-      </div>
-
-      <div className="p-5 grow flex flex-col">
-        <h3 className="text-xl font-bold text-unsa-granate mb-1 leading-tight">
-          {lista.nombre}
-        </h3>
-        
-        <div className="mt-2 text-sm text-gray-600 space-y-1 mb-4">
-          <p><span className="font-semibold text-unsa-azul">Elección:</span> {lista.tipo}</p>
-          <p><span className="font-semibold text-unsa-azul">Año:</span> {lista.anio}</p>
-        </div>
-
-        <div className="mt-auto">
-          <Link 
-            to={`/listas/${lista.id}`}
-            className="block w-full text-center bg-unsa-granate text-white py-2 rounded-md font-medium hover:bg-[#4a0f1e] transition-colors"
-          >
-            Ver Detalle
-          </Link>
-        </div>
-      </div>
+    <div className="bg-white rounded-xl shadow-lg p-6 flex flex-col items-center text-center transition-all hover:shadow-xl h-full">
+      <img
+        src={logoSrc.startsWith('assets') ? defaultImage : logoSrc}
+        alt={lista.nombre}
+        className="w-28 h-28 rounded-full object-cover mb-4"
+      />
+      <h3 className="text-xl font-semibold text-unsa-granate mb-2">{lista.nombre}</h3>
+      <p className="text-gray-600 text-sm mb-6 flex-grow">{lista.descripcion}</p>
+      <button
+        onClick={handleViewDetails}
+        className="bg-[#651528] text-white font-semibold py-2 px-6 rounded-lg hover:bg-[#4a0f1e] transition-colors cursor-pointer w-4/5"
+      >
+        Ver Detalles
+      </button>
     </div>
   );
 };

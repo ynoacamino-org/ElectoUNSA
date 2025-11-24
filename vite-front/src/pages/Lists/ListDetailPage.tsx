@@ -1,11 +1,11 @@
 import { useParams, Link } from 'react-router-dom';
 import { FileText, ArrowLeft } from 'lucide-react';
-import { LISTAS_DATA } from '../../data/lists';
+import listsData from '../../data/lists.json';
 
 export const ListDetailPage = () => {
   const { id } = useParams();
   
-  const data = LISTAS_DATA.find(lista => lista.id === id);
+  const data = listsData.find((lista: any) => lista.id === id);
 
   if (!data) {
     return (
@@ -77,7 +77,7 @@ export const ListDetailPage = () => {
                   <p className="text-gray-600 text-sm mb-6">
                     Año: {member.anio}
                   </p>
-                  <button className="mt-auto w-full bg-unsa-granate text-white font-bold py-2.5 rounded-lg hover:bg-[#4a0f1e] transition-colors text-sm">
+                  <button className="mt-auto w-full bg-unsa-granate text-white font-bold py-2.5 rounded-lg hover:bg-[#4a0f1e] transition-colors text-sm cursor-pointer">
                     Ver Hoja de Vida
                   </button>
                 </div>
