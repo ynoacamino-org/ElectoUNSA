@@ -8,8 +8,8 @@
     "descripcion": "Somos la lista Renovación Universitaria y buscamos representar a estudiantes y docentes, promoviendo participación, transparencia y propuestas concretas para mejorar nuestra universidad.",
     "logo": "assets/default.png",
     "documentos": [
-      { "titulo": "Plan de Trabajo 2025 - 2026", "desc": "Documento PDF detallando las propuestas." },
-      { "titulo": "Propuesta Académica", "desc": "Iniciativas y proyectos de la lista." }
+      { "titulo": "Plan de Trabajo 2025 - 2026", "desc": "Documento PDF detallando las propuestas.", "archivo": "documents/PlanDeTrabajo.pdf" },
+      { "titulo": "Propuesta Académica", "desc": "Iniciativas y proyectos de la lista.", "archivo": "documents/PropuestasDeListas.pdf" }
     ],
     "integrantes": [
       { "nombre": "Juan Carlos Quinto", "cargo": "Candidato a Asamblea", "anio": "2025", "foto": "assets/default.png" },
@@ -25,7 +25,7 @@
     "descripcion": "Buscamos integrar a todas las escuelas profesionales bajo una misma visión de modernidad y acreditación internacional.",
     "logo": "assets/default.png",
     "documentos": [
-      { "titulo": "Plan de Gobierno Decanato", "desc": "Propuestas especificas para la facultad." }
+      { "titulo": "Plan de Gobierno Decanato", "desc": "Propuestas especificas para la facultad.", "archivo": "documents/PlanDeTrabajo.pdf" }
     ],
     "integrantes": [
       { "nombre": "Dr. Luis Peralta", "cargo": "Candidato a Decano", "anio": "2024", "foto": "assets/default.png" },
@@ -41,7 +41,7 @@
     "descripcion": "Representamos a los estudiantes con propuestas frescas y un compromiso real con la mejora de la calidad educativa y los servicios estudiantiles.",
     "logo": "assets/default.png",
     "documentos": [
-      { "titulo": "Propuestas para la Asamblea 2025", "desc": "Iniciativas estudiantiles para el próximo periodo." }
+      { "titulo": "Propuestas para la Asamblea 2025", "desc": "Iniciativas estudiantiles para el próximo periodo.", "archivo": "documents/PropuestasDeListas.pdf" }
     ],
     "integrantes": [
       { "nombre": "Carlos Mendoza", "cargo": "Candidato a Asamblea", "anio": "2025", "foto": "assets/default.png" },
