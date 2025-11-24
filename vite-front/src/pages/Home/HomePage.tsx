@@ -1,6 +1,8 @@
+import { useNavigate } from "react-router-dom";
 import Banner from "../../assets/Banner.jpeg";
 
 function HomePage() {
+  const navigate = useNavigate();
   return (
     <div className="w-full flex flex-col">
 
@@ -28,7 +30,10 @@ function HomePage() {
         <div className="flex flex-wrap justify-center items-stretch gap-10 w-[90%]">
 
           {/* CARD 1 */}
-          <div className="bg-white rounded-xl shadow-lg p-10 flex-1 min-w-[300px] max-w-[400px] flex flex-col justify-center items-center text-center transition-all hover:shadow-xl min-h-[40vh] gap-3">
+          <div 
+            className="bg-white rounded-xl shadow-lg p-10 flex-1 min-w-[300px] max-w-[400px] flex flex-col justify-center items-center text-center transition-all hover:shadow-[0_10px_20px_rgba(101,21,40,0.4)] min-h-[40vh] gap-3 cursor-pointer active:scale-95"
+            onClick={() => navigate("/listas")}
+          >
             <div className="w-28 h-28 bg-[#651528] rounded-full flex items-center justify-center">
               {/* Icono o imagen */}
             </div>
@@ -39,7 +44,10 @@ function HomePage() {
           </div>
 
           {/* CARD 2 */}
-          <div className="bg-white rounded-xl shadow-lg p-10 flex-1 min-w-[300px] max-w-[400px] flex flex-col justify-center items-center text-center transition-all hover:shadow-xl min-h-[40vh] gap-3">
+          <div 
+            className="bg-white rounded-xl shadow-lg p-10 flex-1 min-w-[300px] max-w-[400px] flex flex-col justify-center items-center text-center transition-all hover:shadow-[0_10px_20px_rgba(101,21,40,0.4)] min-h-[40vh] gap-3 cursor-pointer active:scale-95"
+            onClick={() => navigate("/proceso")}
+          >
             <div className="w-28 h-28 bg-[#651528] rounded-full flex items-center justify-center">
               {/* Icono o imagen */}
             </div>
@@ -77,7 +85,10 @@ function HomePage() {
           <p className="text-lg text-white">
             Gestiona tu lista desde el portal de postulantes
           </p>
-          <button className="bg-[#1B2753] text-white font-semibold px-6 py-3 rounded-lg border border-white hover:bg-[#0f1b38] transition">
+          <button 
+            onClick={() => navigate("/acceso")}
+            className="bg-[#1B2753] text-white font-semibold px-6 py-3 rounded-lg border border-white hover:bg-[#0f1b38] transition active:scale-95 cursor-pointer"
+          >
             Accede al portal
           </button>
         </div>
@@ -101,7 +112,10 @@ function HomePage() {
     <div className="flex flex-wrap justify-center gap-8">
       
       {/* DESTACADA CARD 1 */}
-      <div className="bg-white border border-gray-200 rounded-lg shadow-md hover:shadow-xl transition-shadow w-full sm:w-70 md:w-90 cursor-pointer">
+      <div 
+        className="bg-white border border-gray-200 rounded-lg shadow-md hover:shadow-[0_10px_20px_rgba(101,21,40,0.4)] transition-shadow w-full sm:w-70 md:w-90 cursor-pointer"
+        onClick={() => navigate("/listas")}
+      >
         <div className="h-50 bg-[#a86576] rounded-t-lg">
           {/* Bloque de color vino */}
         </div>
@@ -116,7 +130,10 @@ function HomePage() {
       </div>
 
       {/* DESTACADA CARD 2 */}
-      <div className="bg-white border border-gray-200 rounded-lg shadow-md hover:shadow-xl transition-shadow w-full sm:w-70 md:w-90 cursor-pointer">
+      <div 
+        className="bg-white border border-gray-200 rounded-lg shadow-md hover:shadow-[0_10px_20px_rgba(101,21,40,0.4)] transition-shadow w-full sm:w-70 md:w-90 cursor-pointer"
+        onClick={() => navigate("/proceso")}
+      >
         <div className="h-50 bg-[#a86576] rounded-t-lg">
           {/* Bloque de color vino */}
         </div>
@@ -131,7 +148,10 @@ function HomePage() {
       </div>
 
       {/* DESTACADA CARD 3 */}
-      <div className="bg-white border border-gray-200 rounded-lg shadow-md hover:shadow-xl transition-shadow w-full sm:w-70 md:w-90 cursor-pointer">
+      <div 
+        className="bg-white border border-gray-200 rounded-lg shadow-md hover:shadow-[0_10px_20px_rgba(101,21,40,0.4)] transition-shadow w-full sm:w-70 md:w-90 cursor-pointer"
+        onClick={() => navigate("/listas")}
+      >
         <div className="h-50 bg-[#a86576] rounded-t-lg">
           {/* Bloque de color vino */}
         </div>
