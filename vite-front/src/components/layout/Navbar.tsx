@@ -19,7 +19,7 @@ function Navbar() {
   return (
     <nav className="bg-[#651528] text-white h-16 shadow-md select-none relative">
 
-      <div className="h-full flex items-center justify-center gap-140">
+      <div className="h-full flex items-center justify-center gap-[25vw]">
 
         {/* IZQUIERDA */}
         <div className="flex items-center gap-4 ml-8">
