@@ -1,0 +1,35 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  color: #6e1f28; /* granate */
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: transform .12s ease, background-color .12s ease, color .12s ease;
+}
+
+.icon svg {
+  width: 20px;
+  height: 20px;
+  display: block;
+}
+
+/* hover / focus / active */
+.button:hover {
+  transform: translateX(-4px);
+  background-color: rgba(110,31,40,0.06);
+}
+
+.button:active {
+  transform: translateX(-2px);
+}
+
+.button:focus {
+  outline: 3px solid rgba(110,31,40,0.12);
+  outline-offset: 2px;
+}
