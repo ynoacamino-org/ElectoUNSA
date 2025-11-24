@@ -1,32 +1,40 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FilterBar } from '../../components/lists/FilterBar';
 import { ListCard } from '../../components/lists/ListCard';
-import listsData from '../../data/lists.json';
+import { getAllLists } from '../../data/dataManager';
+import type { ElectoralList } from '../../types';
 
 export const ListsPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedType, setSelectedType] = useState('');
   const [selectedYear, setSelectedYear] = useState('');
+  
+  // Estado que almacena TODAS las listas (JSON + Nuevas)
+  const [allLists, setAllLists] = useState<ElectoralList[]>([]);
+  // Estado para lo que se muestra en pantalla filtrado
+  const [filteredLists, setFilteredLists] = useState<ElectoralList[]>([]);
 
-  const [filteredLists, setFilteredLists] = useState(listsData);
+  // Cargar datos al iniciar
+  useEffect(() => {
+    const data = getAllLists();
+    setAllLists(data);
+    setFilteredLists(data);
+  }, []);
 
   const handleApplyFilters = () => {
-    let result = listsData;
+    let result = allLists;
 
     if (searchTerm.trim() !== '') {
       result = result.filter(lista => 
         lista.nombre.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
-
     if (selectedType !== '') {
       result = result.filter(lista => lista.tipo === selectedType);
     }
-
     if (selectedYear !== '') {
       result = result.filter(lista => lista.anio === selectedYear);
     }
-
     setFilteredLists(result);
   };
 
@@ -34,7 +42,7 @@ export const ListsPage = () => {
     setSearchTerm('');
     setSelectedType('');
     setSelectedYear('');
-    setFilteredLists(listsData);
+    setFilteredLists(allLists);
   };
 
   return (
@@ -60,23 +68,15 @@ export const ListsPage = () => {
         />
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {filteredLists.map((lista: any) => (
-            <ListCard 
-              key={lista.id} 
-              lista={lista} 
-            />
+          {filteredLists.map((lista) => (
+            <ListCard key={lista.id} lista={lista} />
           ))}
         </div>
 
         {filteredLists.length === 0 && (
-          <div className="text-center py-20 bg-white rounded-xl border border-gray-200 shadow-sm mt-6">
-            <div className="text-gray-400 text-6xl mb-4">🔍</div>
+          <div className="text-center py-20 bg-white rounded-xl border border-gray-200 mt-6">
             <h3 className="text-xl font-bold text-gray-700">No se encontraron resultados</h3>
-            <p className="text-gray-500 mt-2">Intenta ajustar los filtros o limpiar la búsqueda.</p>
-            <button 
-              onClick={handleClear}
-              className="mt-4 text-unsa-granate font-bold hover:underline"
-            >
+            <button onClick={handleClear} className="mt-4 text-unsa-granate font-bold hover:underline">
               Limpiar filtros
             </button>
           </div>
