@@ -33,14 +33,18 @@ export default function AccessPage() {
         <p className={styles.description}>
           Acceso exclusivo para cuentas autorizadas.
           <br />
-          solo los administradores y postulantes registrados pueden ingresar para gestionar la información electoral
+          Solo los administradores y postulantes
+          <br />
+          registrados pueden ingresar para gestionar la 
+          <br />
+          información electoral
         </p>
 
         <button
           className={styles.googleBtn}
           onClick={(e) => {
             e.preventDefault();
-            // placeholder: aquí irá la acción real (OAuth) cuando se conecte el backend
+            // placeholder: aquí irá la acción real (OAuth) para conectar al backend
           }}
         >
           <span className={styles.icon}><GoogleIcon /></span>
