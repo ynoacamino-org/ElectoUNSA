@@ -1,37 +1,10 @@
-import React from 'react';
-import {
-  Megaphone,
-  FileText,
-  AlertCircle,
-  Ban,
-  CheckCircle2,
-  Mic2,
-  Vote,
-  Calculator,
-  Trophy,
-  AlertTriangle,
-  Check
-} from 'lucide-react';
-
-export interface ElectoralStep {
-  id: number;
-  title: string;
-  icon: React.ReactNode;
-  content?: string;
-  list?: string[];
-  subsections?: {
-    title: string;
-    list: string[];
-  }[];
-}
-
-export const electoralProcessSteps: ElectoralStep[] = [
+[
   {
-    id: 1,
-    title: "Convocatoria",
-    icon: <Megaphone className="w-6 h-6" />,
-    content: "El Comité Electoral Universitario (CEU) publica:",
-    list: [
+    "id": 1,
+    "title": "Convocatoria",
+    "icon": "Megaphone",
+    "content": "El Comité Electoral Universitario (CEU) publica:",
+    "list": [
       "El cargo a elegir",
       "El cronograma electoral",
       "Los requisitos para ser candidato",
@@ -41,11 +14,11 @@ export const electoralProcessSteps: ElectoralStep[] = [
     ]
   },
   {
-    id: 2,
-    title: "Inscripción de listas y candidatos",
-    icon: <FileText className="w-6 h-6" />,
-    content: "Los grupos interesados entregan:",
-    list: [
+    "id": 2,
+    "title": "Inscripción de listas y candidatos",
+    "icon": "FileText",
+    "content": "Los grupos interesados entregan:",
+    "list": [
       "Solicitud de inscripción",
       "Hoja de vida",
       "Declaración jurada",
@@ -55,22 +28,22 @@ export const electoralProcessSteps: ElectoralStep[] = [
     ]
   },
   {
-    id: 3,
-    title: "Subsanación de observaciones",
-    icon: <AlertCircle className="w-6 h-6" />,
-    content: "Si algún documento falta o está mal:",
-    list: [
+    "id": 3,
+    "title": "Subsanación de observaciones",
+    "icon": "AlertCircle",
+    "content": "Si algún documento falta o está mal:",
+    "list": [
       "El CEU notifica",
       "Se otorga un plazo corto para corregir",
       "Si no se corrige, la lista queda excluida"
     ]
   },
   {
-    id: 4,
-    title: "Periodo de tachas",
-    icon: <Ban className="w-6 h-6" />,
-    content: "Cualquier votante puede presentar una tacha por:",
-    list: [
+    "id": 4,
+    "title": "Periodo de tachas",
+    "icon": "Ban",
+    "content": "Cualquier votante puede presentar una tacha por:",
+    "list": [
       "Falsedad de información",
       "Incumplimiento de requisitos",
       "Antecedentes o sanciones",
@@ -78,22 +51,22 @@ export const electoralProcessSteps: ElectoralStep[] = [
     ]
   },
   {
-    id: 5,
-    title: "Publicación de listas hábiles",
-    icon: <CheckCircle2 className="w-6 h-6" />,
-    content: "Solo las listas que:",
-    list: [
+    "id": 5,
+    "title": "Publicación de listas hábiles",
+    "icon": "CheckCircle2",
+    "content": "Solo las listas que:",
+    "list": [
       "se inscribieron",
       "corrigieron observaciones",
       "no fueron tachadas"
     ]
   },
   {
-    id: 6,
-    title: "Campaña electoral",
-    icon: <Mic2 className="w-6 h-6" />,
-    content: "Las listas pueden:",
-    list: [
+    "id": 6,
+    "title": "Campaña electoral",
+    "icon": "Mic2",
+    "content": "Las listas pueden:",
+    "list": [
       "Presentar propuestas",
       "Realizar actividades autorizadas",
       "Participar en debates y foros",
@@ -101,13 +74,13 @@ export const electoralProcessSteps: ElectoralStep[] = [
     ]
   },
   {
-    id: 7,
-    title: "Jornada electoral",
-    icon: <Vote className="w-6 h-6" />,
-    subsections: [
+    "id": 7,
+    "title": "Jornada electoral",
+    "icon": "Vote",
+    "subsections": [
       {
-        title: "Presencial",
-        list: [
+        "title": "Presencial",
+        "list": [
           "Se instalan mesas de votación",
           "Se verifica identidad",
           "Se entrega cédula",
@@ -116,8 +89,8 @@ export const electoralProcessSteps: ElectoralStep[] = [
         ]
       },
       {
-        title: "Virtual",
-        list: [
+        "title": "Virtual",
+        "list": [
           "El estudiante o docente se autentica",
           "Accede al sistema seguro",
           "Emite su voto una sola vez",
@@ -127,13 +100,13 @@ export const electoralProcessSteps: ElectoralStep[] = [
     ]
   },
   {
-    id: 8,
-    title: "Escrutinio",
-    icon: <Calculator className="w-6 h-6" />,
-    subsections: [
+    "id": 8,
+    "title": "Escrutinio",
+    "icon": "Calculator",
+    "subsections": [
       {
-        title: "Presencial:",
-        list: [
+        "title": "Presencial:",
+        "list": [
           "Se abren ánforas",
           "Se cuentan los votos",
           "Se llenan actas",
@@ -141,8 +114,8 @@ export const electoralProcessSteps: ElectoralStep[] = [
         ]
       },
       {
-        title: "Virtual:",
-        list: [
+        "title": "Virtual:",
+        "list": [
           "El sistema registra los votos automáticamente",
           "Se genera un reporte de resultados",
           "Se audita la integridad del proceso"
@@ -151,11 +124,11 @@ export const electoralProcessSteps: ElectoralStep[] = [
     ]
   },
   {
-    id: 9,
-    title: "Proclamación de resultados",
-    icon: <Trophy className="w-6 h-6" />,
-    content: "El CEU publica:",
-    list: [
+    "id": 9,
+    "title": "Proclamación de resultados",
+    "icon": "Trophy",
+    "content": "El CEU publica:",
+    "list": [
       "Resultados oficiales",
       "Votos válidos, nulos y blancos",
       "Lista o candidato ganador",
@@ -163,11 +136,11 @@ export const electoralProcessSteps: ElectoralStep[] = [
     ]
   },
   {
-    id: 10,
-    title: "Impugnaciones",
-    icon: <AlertTriangle className="w-6 h-6" />,
-    content: "Durante un plazo breve se pueden presentar reclamos por:",
-    list: [
+    "id": 10,
+    "title": "Impugnaciones",
+    "icon": "AlertTriangle",
+    "content": "Durante un plazo breve se pueden presentar reclamos por:",
+    "list": [
       "Actas mal llenadas",
       "Errores de conteo",
       "Irregularidades",
@@ -175,13 +148,13 @@ export const electoralProcessSteps: ElectoralStep[] = [
     ]
   },
   {
-    id: 11,
-    title: "Credenciales",
-    icon: <Check className="w-6 h-6" />,
-    content: "Finalmente:",
-    list: [
+    "id": 11,
+    "title": "Credenciales",
+    "icon": "Check",
+    "content": "Finalmente:",
+    "list": [
       "Se entregan credenciales al candidato o lista ganadora",
       "Queda oficialmente reconocida la autoridad o representante electo"
     ]
   }
-];
+]
