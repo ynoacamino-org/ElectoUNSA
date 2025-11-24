@@ -17,7 +17,7 @@ function Navbar() {
   };
 
   return (
-    <nav className="bg-[#651528] text-white h-14 shadow-md select-none relative">
+    <nav className="bg-[#651528] text-white h-16 shadow-md select-none relative">
 
       <div className="h-full flex items-center justify-center gap-140">
 
