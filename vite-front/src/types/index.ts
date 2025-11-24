@@ -8,6 +8,7 @@ export interface Integrante {
 export interface Documento {
   titulo: string;
   desc: string;
+  archivo?: string;
 }
 
 export interface ElectoralList {

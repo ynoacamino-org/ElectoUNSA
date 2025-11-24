@@ -4,6 +4,8 @@ import { Upload, User, Pencil, Trash2, FileText, X, Plus } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { saveList } from '../../data/dataManager';
 import type { ElectoralList } from '../../types';
+import { fileToBase64 } from '../../utils/fileHelpers';
+
 
 interface MemberLocal {
   id: number;
@@ -75,23 +77,43 @@ export const MyListPage = () => {
   };
 
   // GUARDADO PRINCIPAL
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!info.nombreLista) return alert('Ponle nombre a la lista');
 
+    // 1. CONVERTIR ARCHIVOS A TEXTO (BASE64)
+    let logoBase64 = undefined;
+    let pdfBase64 = undefined;
+
+    if (logoFile) {
+      logoBase64 = await fileToBase64(logoFile);
+    }
+    
+    if (pdfFile) {
+      pdfBase64 = await fileToBase64(pdfFile);
+    }
+
+    // 2. CREAR EL OBJETO
     const newList: ElectoralList = {
       id: Date.now().toString(),
       nombre: info.nombreLista,
-      tipo: 'Rectorado', // Hardcode por defecto, podrías agregar un select
+      tipo: 'Rectorado',
       anio: '2025',
       subtitulo: info.slogan || 'Sin slogan',
       descripcion: info.propuestas || 'Sin descripción',
-      documentos: pdfFile ? [{ titulo: "Plan de Gobierno", desc: pdfFile.name }] : [],
+      
+      // Guardamos el PDF convertido dentro del objeto
+      documentos: pdfFile && pdfBase64 ? [{ 
+        titulo: "Plan de Gobierno", 
+        desc: pdfFile.name,
+        archivo: pdfBase64
+      }] : [],
+      
       integrantes: members.map(m => ({ nombre: m.nombre, cargo: m.cargo, anio: '2025' })),
-      logo: logoFile ? URL.createObjectURL(logoFile) : undefined
+      logo: logoBase64
     };
 
     saveList(newList);
-    alert('¡Lista creada exitosamente!');
+    alert('¡Lista creada y documentos guardados!');
     navigate('/listas');
   };
 
