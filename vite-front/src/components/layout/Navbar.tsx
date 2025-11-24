@@ -1,51 +1,56 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useState } from "react";
 
 function Navbar() {
-  // Esto luego se reemplaza con Google Auth
-  const [isLoggedIn] = useState(false); 
+  const location = useLocation();
+  const currentPath = location.pathname;
+
+  const [isLoggedIn] = useState(true);
+
+  const getLinkClasses = (path) => {
+    const baseClasses = "hover:text-gray-300 transition duration-150";
+    
+    if (currentPath === path) {
+      return `${baseClasses} font-bold border-b-2 border-white pb-2`;
+    }
+    return `${baseClasses} font-medium`;
+  };
 
   return (
-    <nav className="bg-red-600 text-white py-4 px-8 flex justify-between items-center shadow-md">
-      
-      {/* Logo */}
-      <div className="flex items-center gap-3">
-        <div className="w-8 h-8 bg-white rounded-full"></div>
-        <span className="text-lg font-bold tracking-wide">ElectoUNSA</span>
-      </div>
+    <nav className="bg-[#651528] text-white h-16 shadow-md select-none relative">
 
-      {/* Menú */}
-      <div className="flex gap-6 text-sm font-medium">
-        <Link to="/" className="hover:underline decoration-2 underline-offset-4">
-          Inicio
-        </Link>
+      <div className="h-full flex items-center justify-center gap-140">
 
-        <Link to="/listas" className="hover:text-gray-200 transition">
-          Listas
-        </Link>
+        {/* IZQUIERDA */}
+        <div className="flex items-center gap-4 ml-8">
+          <div className="w-10 h-10 bg-white rounded-full"></div>
+          <span className="text-xl font-bold tracking-wide">ElectoUNSA</span>
+        </div>
 
-        <Link to="/proceso" className="hover:text-gray-200 transition">
-          Proceso Electoral
-        </Link>
-      </div>
+        {/* MENÚ CENTRAL */}
+        <div className="flex gap-14 text-base">
+          <Link to="/" className={getLinkClasses("/")}>Inicio</Link>
+          <Link to="/listas" className={getLinkClasses("/listas")}>Listas</Link>
+          <Link to="/proceso" className={getLinkClasses("/proceso")}>Proceso Electoral</Link>
+        </div>
 
-      {/* Parte derecha condicional */}
-      <div className="flex items-center gap-2">
-        {!isLoggedIn ? (
-          // Estado SIN sesión
-          <Link to="/acceso" className="text-sm hover:text-gray-200 transition">
-            Iniciar sesión
-          </Link>
-        ) : (
-          // Estado CON sesión
-          <Link to="/mi-lista" className="flex items-center gap-2 hover:text-gray-200 transition">
-            <span className="text-sm">JuntosUNSA</span>
-            <div className="w-8 h-8 bg-white rounded-full"></div>
-          </Link>
-        )}
+        {/* DERECHA */}
+        <div className="flex items-center gap-4 mr-8">
+          {isLoggedIn ? (
+            <Link to="/mi-lista" className="flex items-center gap-3 hover:text-gray-300 transition">
+              <span className="text-sm font-bold">JuntosUNSA</span>
+              <div className="w-9 h-9 bg-white rounded-full"></div>
+            </Link>
+          ) : (
+            <Link to="/acceso" className="text-sm hover:text-gray-300 transition">
+              Iniciar sesión
+            </Link>
+          )}
+        </div>
       </div>
     </nav>
   );
 }
 
 export default Navbar;
+
