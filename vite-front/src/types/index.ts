@@ -1,21 +1,24 @@
-export type ElectionType = 'Rectorado' | 'Decanato' | 'Asamblea' | 'Consejo';
-
-export interface Member {
-  id: string;
+// src/types/index.ts
+export interface Integrante {
   nombre: string;
   cargo: string;
-  fotoUrl?: string; // Opcional
-  cvUrl?: string;
+  anio: string;
+}
+
+export interface Documento {
+  titulo: string;
+  desc: string;
+  archivo?: string;
 }
 
 export interface ElectoralList {
   id: string;
   nombre: string;
-  tipo: ElectionType;
+  tipo: string;
   anio: string;
-  facultad?: string; // Opcional, para decanatos
-  descripcion?: string;
-  logoUrl?: string; // El cuadro rosa/granate de la imagen
-  integrantes: Member[];
-  planGobiernoUrl?: string;
+  subtitulo: string;
+  descripcion: string;
+  documentos: Documento[];
+  integrantes: Integrante[];
+  logo?: string; // Opcional, para la URL de la imagen
 }

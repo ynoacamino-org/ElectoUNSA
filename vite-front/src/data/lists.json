@@ -6,14 +6,32 @@
     "anio": "2025",
     "subtitulo": "Elecciones de Representantes Estudiantiles 2024",
     "descripcion": "Somos la lista Renovación Universitaria y buscamos representar a estudiantes y docentes, promoviendo participación, transparencia y propuestas concretas para mejorar nuestra universidad.",
-    "logo": "assets/default.png",
+    "logo": "renovacion_universitaria.png",
     "documentos": [
-      { "titulo": "Plan de Trabajo 2025 - 2026", "desc": "Documento PDF detallando las propuestas." },
-      { "titulo": "Propuesta Académica", "desc": "Iniciativas y proyectos de la lista." }
+      {
+        "titulo": "Plan de Trabajo 2025 - 2026",
+        "desc": "Documento PDF detallando las propuestas.",
+        "archivo": "documents/PlanDeTrabajo.pdf"
+      },
+      {
+        "titulo": "Propuesta Académica",
+        "desc": "Iniciativas y proyectos de la lista.",
+        "archivo": "documents/PropuestasDeListas.pdf"
+      }
     ],
     "integrantes": [
-      { "nombre": "Juan Carlos Quinto", "cargo": "Candidato a Asamblea", "anio": "2025", "foto": "assets/default.png" },
-      { "nombre": "Maria Fernandez", "cargo": "Candidato a Consejo", "anio": "2025", "foto": "assets/default.png" }
+      {
+        "nombre": "Juan Carlos Quinto",
+        "cargo": "Candidato a Asamblea",
+        "anio": "2025",
+        "foto": "juan_carlos_quinto.jpg"
+      },
+      {
+        "nombre": "Maria Fernandez",
+        "cargo": "Candidato a Consejo",
+        "anio": "2025",
+        "foto": "maria fernandez.jpeg"
+      }
     ]
   },
   {
@@ -23,13 +41,27 @@
     "anio": "2024",
     "subtitulo": "Unidad y Compromiso por tu Facultad",
     "descripcion": "Buscamos integrar a todas las escuelas profesionales bajo una misma visión de modernidad y acreditación internacional.",
-    "logo": "assets/default.png",
+    "logo": "unsa_integra.png",
     "documentos": [
-      { "titulo": "Plan de Gobierno Decanato", "desc": "Propuestas especificas para la facultad." }
+      {
+        "titulo": "Plan de Gobierno Decanato",
+        "desc": "Propuestas especificas para la facultad.",
+        "archivo": "documents/PlanDeTrabajo.pdf"
+      }
     ],
     "integrantes": [
-      { "nombre": "Dr. Luis Peralta", "cargo": "Candidato a Decano", "anio": "2024", "foto": "assets/default.png" },
-      { "nombre": "Dra. Ana Soto", "cargo": "Vicedecana Académica", "anio": "2024", "foto": "assets/default.png" }
+      {
+        "nombre": "Dr. Luis Peralta",
+        "cargo": "Candidato a Decano",
+        "anio": "2024",
+        "foto": "Luis_peralta.jpeg"
+      },
+      {
+        "nombre": "Dra. Ana Soto",
+        "cargo": "Vicedecana Académica",
+        "anio": "2024",
+        "foto": "ana_soto.png"
+      }
     ]
   },
   {
@@ -39,13 +71,27 @@
     "anio": "2025",
     "subtitulo": "Voz Activa de los Estudiantes",
     "descripcion": "Representamos a los estudiantes con propuestas frescas y un compromiso real con la mejora de la calidad educativa y los servicios estudiantiles.",
-    "logo": "assets/default.png",
+    "logo": "fuerza_estudiantil.png",
     "documentos": [
-      { "titulo": "Propuestas para la Asamblea 2025", "desc": "Iniciativas estudiantiles para el próximo periodo." }
+      {
+        "titulo": "Propuestas para la Asamblea 2025",
+        "desc": "Iniciativas estudiantiles para el próximo periodo.",
+        "archivo": "documents/PropuestasDeListas.pdf"
+      }
     ],
     "integrantes": [
-      { "nombre": "Carlos Mendoza", "cargo": "Candidato a Asamblea", "anio": "2025", "foto": "assets/default.png" },
-      { "nombre": "Lucia Ramirez", "cargo": "Candidata a Consejo", "anio": "2025", "foto": "assets/default.png" }
+      {
+        "nombre": "Carlos Mendoza",
+        "cargo": "Candidato a Asamblea",
+        "anio": "2025",
+        "foto": "carlos_mendoza.jpeg"
+      },
+      {
+        "nombre": "Lucia Ramirez",
+        "cargo": "Candidata a Consejo",
+        "anio": "2025",
+        "foto": "lucia_ramirez.jpeg"
+      }
     ]
   }
 ]
